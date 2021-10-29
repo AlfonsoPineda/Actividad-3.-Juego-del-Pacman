@@ -13,7 +13,7 @@ from turtle import *
 
 from freegames import floor, vector
 
-state = {'score': 0}
+state = {"score": 0}
 path = Turtle(visible=False)
 writer = Turtle(visible=False)
 aim = vector(5, 0)
@@ -90,8 +90,8 @@ def valid(point):
 
 def world():
     "Draw world using path."
-    bgcolor('black')
-    path.color('green')
+    bgcolor("black")
+    path.color("green")
 
     for index in range(len(tiles)):
         tile = tiles[index]
@@ -104,13 +104,13 @@ def world():
             if tile == 1:
                 path.up()
                 path.goto(x + 10, y + 10)
-                path.dot(2, 'white')
+                path.dot(2, "white")
 
 
 def move():
     "Move pacman and all ghosts."
     writer.undo()
-    writer.write(state['score'])
+    writer.write(state["score"])
 
     clear()
 
@@ -121,40 +121,39 @@ def move():
 
     if tiles[index] == 1:
         tiles[index] = 2
-        state['score'] += 1
+        state["score"] += 1
         x = (index % 20) * 20 - 200
         y = 180 - (index // 20) * 20
         square(x, y)
 
     up()
     goto(pacman.x + 10, pacman.y + 10)
-    dot(20, 'yellow')
+    dot(20, "yellow")
 
     for point, course in ghosts:
         if valid(point + course):
             point.move(course)
         else:
             # Saber dónde está Pac - Man con respecto a los fantasmas
-                # point es un vector (x,y) que indica la posición del fantasma
-                # pacman.x y pacman.y son las coordenadas del Pac - man en el mundo. 
+            # point es un vector (x,y) que indica la posición del fantasma
+            # pacman.x y pacman.y son las coordenadas del Pac - man en el mundo.
 
-            if (pacman.x > point.x):
+            if pacman.x > point.x:
                 # El Pac - Man está a mi derecha
-                if (pacman.y > point.y):
+                if pacman.y > point.y:
                     # El Pac - Man está arriba a la derecha
-                    options = [vector(5,0) , vector(0,5)] #RU
+                    options = [vector(5, 0), vector(0, 5)]  # RU
                 else:
                     # El Pac - Man está abajo a la derecha
-                    options = [vector(5,0) , vector(0,-5)] #RD
+                    options = [vector(5, 0), vector(0, -5)]  # RD
             else:
                 # El Pac - Man está a mi izquierda
-                if (pacman.y > point.y):
+                if pacman.y > point.y:
                     # El Pac - Man está arriba a la izquierda
-                    options = [vector(-5,0) , vector(0,5)] #RU
+                    options = [vector(-5, 0), vector(0, 5)]  # RU
                 else:
                     # El Pac - Man está abajo a la izquierda
-                    options = [vector(-5,0) , vector(0,-5)] #RD
-
+                    options = [vector(-5, 0), vector(0, -5)]  # RD
 
             plan = choice(options)
             course.x = plan.x
@@ -162,7 +161,7 @@ def move():
 
         up()
         goto(point.x + 10, point.y + 10)
-        dot(20, 'red')
+        dot(20, "red")
 
     update()
 
@@ -170,7 +169,7 @@ def move():
         if abs(pacman - point) < 20:
             return
 
-    ontimer(move, 100)
+    ontimer(move, 40)
 
 
 def change(x, y):
@@ -184,13 +183,13 @@ setup(420, 420, 370, 0)
 hideturtle()
 tracer(False)
 writer.goto(160, 160)
-writer.color('white')
-writer.write(state['score'])
+writer.color("white")
+writer.write(state["score"])
 listen()
-onkey(lambda: change(5, 0), 'Right')
-onkey(lambda: change(-5, 0), 'Left')
-onkey(lambda: change(0, 5), 'Up')
-onkey(lambda: change(0, -5), 'Down')
+onkey(lambda: change(5, 0), "Right")
+onkey(lambda: change(-5, 0), "Left")
+onkey(lambda: change(0, 5), "Up")
+onkey(lambda: change(0, -5), "Down")
 world()
 move()
 done()
